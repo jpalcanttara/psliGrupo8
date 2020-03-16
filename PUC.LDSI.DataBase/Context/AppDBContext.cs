@@ -12,6 +12,18 @@ namespace PUC.LDSI.DataBase
         //DbSets - example
         //public DbSet<EntityName> EntityName { get; set; }
 
+        public DbSet<Aluno> Aluno { get; set; }
+        public DbSet<Avaliacao> Avaliacao { get; set; }
+        public DbSet<OpcaoAvaliacao> OpcaoAvaliacao { get; set; }
+        public DbSet<OpcaoProva> OpcaoProva { get; set; }
+        public DbSet<Professor> Professor { get; set; }
+        public DbSet<Prova> Prova { get; set; }
+        public DbSet<Publicacao> Publicacao { get; set; }
+        public DbSet<Questao> QuestaoAvaliacao { get; set; }
+        public DbSet<QuestaoProva> QuestaoProva { get; set; }
+        public DbSet<Turma> Turma { get; set; }
+
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
@@ -23,6 +35,17 @@ namespace PUC.LDSI.DataBase
 
             //Example - Apply Configuration
             //modelbuilder.ApplyConfiguration(new EntityNameConfiguration());
+
+            modelbuilder.ApplyConfiguration(new AlunoConfiguration());
+            modelbuilder.ApplyConfiguration(new AvaliacaoConfiguration());
+            modelbuilder.ApplyConfiguration(new OpcaoAvaliacaoConfiguration());
+            modelbuilder.ApplyConfiguration(new OpcaoProvaConfiguration());
+            modelbuilder.ApplyConfiguration(new ProfessorConfiguration());
+            modelbuilder.ApplyConfiguration(new ProvaConfiguration());
+            modelbuilder.ApplyConfiguration(new PublicacaoConfiguration());
+            modelbuilder.ApplyConfiguration(new QuestaoAvaliacaoConfiguration());
+            modelbuilder.ApplyConfiguration(new QuestaoProvaConfiguration());
+            modelbuilder.ApplyConfiguration(new TurmaConfiguration());
 
             base.OnModelCreating(modelbuilder);
         }

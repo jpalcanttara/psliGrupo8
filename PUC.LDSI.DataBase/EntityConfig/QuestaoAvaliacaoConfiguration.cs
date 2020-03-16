@@ -16,7 +16,7 @@ namespace PUC.LDSI.DataBase.EntityConfig
             builder.Property(x => x.Tipo).IsRequired();
             builder.Property(x => x.Tipo).HasColumnType("int");
             builder.Property(x => x.Enunciado).IsRequired();
-            builder.Property(x => x.Enunciado).HasColumnType("varchar(255)");
+            builder.Property(x => x.Enunciado).HasColumnType("varchar(500)");
             builder.HasOne(x => x.Avaliacao).WithMany(x => x.Questoes).HasForeignKey(x => x.AvaliacaoId);
 
             new EntityConfiguration();
