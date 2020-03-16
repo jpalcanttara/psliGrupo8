@@ -11,8 +11,8 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Professor> builder)
         {
-            builder.Property(x => x.nome).IsRequired();
-            builder.Property(x => x.nome).HasColumnType("varchar(100)");
+            builder.Property(x => x.Nome).IsRequired();
+            builder.Property(x => x.Nome).HasColumnType("varchar(100)");
 
             new EntityConfiguration();
         }

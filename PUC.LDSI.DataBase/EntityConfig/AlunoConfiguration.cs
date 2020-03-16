@@ -11,9 +11,9 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Aluno> builder)
         {
-            builder.Property(x => x.nome).IsRequired();
-            builder.Property(x => x.nome).HasColumnType("varchar(100)");
-            builder.HasOne(x => x.turma).WithMany(x => x.alunos).HasForeignKey(x => x.turmaId);
+            builder.Property(x => x.Nome).IsRequired();
+            builder.Property(x => x.Nome).HasColumnType("varchar(100)");
+            builder.HasOne(x => x.Turma).WithMany(x => x.Alunos).HasForeignKey(x => x.TurmaId);
             new EntityConfiguration();
         }
     }

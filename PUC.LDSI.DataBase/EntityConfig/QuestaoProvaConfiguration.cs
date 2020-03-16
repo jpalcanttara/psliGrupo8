@@ -11,12 +11,12 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<QuestaoProva> builder)
         {
-            builder.Property(x => x.questaoAvaliacaoId).IsRequired();
-            builder.Property(x => x.questaoAvaliacaoId).HasColumnType("int");
-            builder.Property(x => x.provaId).IsRequired();
-            builder.Property(x => x.provaId).HasColumnType("int");
-            builder.HasOne(x => x.questaoAvaliacao).WithMany(x => x.questoesProvas).HasForeignKey(x => x.questaoAvaliacaoId);
-            builder.HasOne(x => x.prova).WithMany(x => x.questoesProvas).HasForeignKey(x => x.provaId);
+            builder.Property(x => x.QuestionId).IsRequired();
+            builder.Property(x => x.QuestionId).HasColumnType("int");
+            builder.Property(x => x.ProvaId).IsRequired();
+            builder.Property(x => x.ProvaId).HasColumnType("int");
+            builder.HasOne(x => x.Questao).WithMany(x => x.QuestoesProva).HasForeignKey(x => x.QuestionId);
+            builder.HasOne(x => x.Prova).WithMany(x => x.QuestoesProva).HasForeignKey(x => x.ProvaId);
 
             new EntityConfiguration();
         }

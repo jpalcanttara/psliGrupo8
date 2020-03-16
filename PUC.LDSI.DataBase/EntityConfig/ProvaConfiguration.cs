@@ -11,14 +11,14 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Prova> builder)
         {
-            builder.Property(x => x.avaliacaoId).IsRequired();
-            builder.Property(x => x.avaliacaoId).HasColumnType("int");
-            builder.Property(x => x.alunoId).IsRequired();
-            builder.Property(x => x.alunoId).HasColumnType("int");
-            builder.Property(x => x.dataProva).IsRequired();
-            builder.Property(x => x.dataProva).HasColumnType("datetime");
-            builder.HasOne(x => x.avaliacao).WithMany(x => x.provas).HasForeignKey(x => x.avaliacaoId);
-            builder.HasOne(x => x.aluno).WithMany(x => x.provas).HasForeignKey(x => x.alunoId);
+            builder.Property(x => x.AvaliacaoId).IsRequired();
+            builder.Property(x => x.AvaliacaoId).HasColumnType("int");
+            builder.Property(x => x.AlunoId).IsRequired();
+            builder.Property(x => x.AlunoId).HasColumnType("int");
+            builder.Property(x => x.DataProva).IsRequired();
+            builder.Property(x => x.DataProva).HasColumnType("datetime");
+            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Provas).HasForeignKey(x => x.AvaliacaoId);
+            builder.HasOne(x => x.Aluno).WithMany(x => x.Provas).HasForeignKey(x => x.AlunoId);
 
             new EntityConfiguration();
         }

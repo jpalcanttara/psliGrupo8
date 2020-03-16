@@ -11,9 +11,9 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<OpcaoAvaliacao> builder)
         {
-            builder.Property(x => x.descricao).IsRequired();
-            builder.Property(x => x.descricao).HasColumnType("varchar(250)");
-            builder.HasOne(x => x.questaoAvaliacao).WithMany(x => x.opcoesAvaliacoes).HasForeignKey(x => x.questaoAvaliacaoId);
+            builder.Property(x => x.Descricao).IsRequired();
+            builder.Property(x => x.Descricao).HasColumnType("varchar(250)");
+            builder.HasOne(x => x.Questao).WithMany(x => x.OpcoesAvaliacao).HasForeignKey(x => x.QuestaoId);
 
             new EntityConfiguration();
         }

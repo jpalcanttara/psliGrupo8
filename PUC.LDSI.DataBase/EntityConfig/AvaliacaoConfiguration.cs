@@ -11,13 +11,13 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Avaliacao> builder)
         {
-            builder.Property(x => x.disciplina).IsRequired();
-            builder.Property(x => x.disciplina).HasColumnType("varchar(100)");
-            builder.Property(x => x.materia).IsRequired();
-            builder.Property(x => x.materia).HasColumnType("varchar(100)");
-            builder.Property(x => x.descricao).IsRequired();
-            builder.Property(x => x.descricao).HasColumnType("varchar(250)");
-            builder.HasOne(x => x.professor).WithMany(x => x.avaliacoes).HasForeignKey(x => x.professorId);
+            builder.Property(x => x.Disciplina).IsRequired();
+            builder.Property(x => x.Disciplina).HasColumnType("varchar(100)");
+            builder.Property(x => x.Materia).IsRequired();
+            builder.Property(x => x.Materia).HasColumnType("varchar(100)");
+            builder.Property(x => x.Descricao).IsRequired();
+            builder.Property(x => x.Descricao).HasColumnType("varchar(250)");
+            builder.HasOne(x => x.Professor).WithMany(x => x.Avaliacoes).HasForeignKey(x => x.ProfessorId);
   
             new EntityConfiguration();
         }

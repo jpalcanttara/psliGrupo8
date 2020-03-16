@@ -11,10 +11,10 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<OpcaoProva> builder)
         {
-            builder.Property(x => x.questaoProvaId).IsRequired().HasColumnType("int");
-            builder.Property(x => x.opcaoAvaliacaoId).IsRequired().HasColumnType("int");
-            builder.HasOne(x => x.questaoProva).WithMany(x => x.opcoesProvas).HasForeignKey(x => x.questaoProvaId);
-            builder.HasOne(x => x.opcaoAvaliacao).WithMany(x => x.opcoesProvas).HasForeignKey(x => x.opcaoAvaliacaoId);
+            builder.Property(x => x.QuestaoProvaId).IsRequired().HasColumnType("int");
+            builder.Property(x => x.OpcaoAvaliacaoId).IsRequired().HasColumnType("int");
+            builder.HasOne(x => x.QuestaoProva).WithMany(x => x.OpcoesProva).HasForeignKey(x => x.QuestaoProvaId);
+            builder.HasOne(x => x.OpcaoAvaliacao).WithMany(x => x.OpcoesProva).HasForeignKey(x => x.OpcaoAvaliacaoId);
 
             new EntityConfiguration();
         }

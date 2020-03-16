@@ -7,17 +7,17 @@ using System.Text;
 
 namespace PUC.LDSI.DataBase.EntityConfig
 {
-    public class QuestaoAvaliacaoConfiguration : IEntityTypeConfiguration<QuestaoAvaliacao>
+    public class QuestaoAvaliacaoConfiguration : IEntityTypeConfiguration<Questao>
     {
-        public void Configure(EntityTypeBuilder<QuestaoAvaliacao> builder)
+        public void Configure(EntityTypeBuilder<Questao> builder)
         {
-            builder.Property(x => x.avaliacaoId).IsRequired();
-            builder.Property(x => x.avaliacaoId).HasColumnType("int");
-            builder.Property(x => x.tipo).IsRequired();
-            builder.Property(x => x.tipo).HasColumnType("int");
-            builder.Property(x => x.enunciado).IsRequired();
-            builder.Property(x => x.enunciado).HasColumnType("varchar(255)");
-            builder.HasOne(x => x.avaliacao).WithMany(x => x.questoesAvaliacoes).HasForeignKey(x => x.avaliacaoId);
+            builder.Property(x => x.AvaliacaoId).IsRequired();
+            builder.Property(x => x.AvaliacaoId).HasColumnType("int");
+            builder.Property(x => x.Tipo).IsRequired();
+            builder.Property(x => x.Tipo).HasColumnType("int");
+            builder.Property(x => x.Enunciado).IsRequired();
+            builder.Property(x => x.Enunciado).HasColumnType("varchar(255)");
+            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Questoes).HasForeignKey(x => x.AvaliacaoId);
 
             new EntityConfiguration();
         }
