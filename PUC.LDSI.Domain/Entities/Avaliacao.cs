@@ -17,7 +17,20 @@ namespace PUC.LDSI.Domain.Entities
 
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            var erros = new List<string>();
+            if (ProfessorId == 0)
+                erros.Add("A Professor precisa ser informada!");
+
+            if (string.IsNullOrEmpty(Disciplina))
+                erros.Add("A disciplina precisa ser informada!");
+
+            if (string.IsNullOrEmpty(Materia))
+                erros.Add("A material precisa ser informada!");
+
+            if (string.IsNullOrEmpty(Descricao))
+                erros.Add("A descrição precisa ser informada!");
+
+            return erros.ToArray();
         }
     }
 }

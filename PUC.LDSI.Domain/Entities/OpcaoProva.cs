@@ -14,7 +14,15 @@ namespace PUC.LDSI.Domain.Entities
 
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            var erros = new List<string>();
+
+            if (OpcaoAvaliacaoId == 0)
+                erros.Add("A Opção precisa ser informada!"); //correção
+
+            if (QuestaoProvaId == 0)
+                erros.Add("A questão precisa ser informada!"); //correção
+
+            return erros.ToArray();
         }
     }
 }
