@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PUC.LDSI.DataBase;
 using PUC.LDSI.IoC;
+using PUC.LDSI.MVC.AutoMapper;
 
 namespace PUC.LDSI.MVC
 {
@@ -34,6 +35,8 @@ namespace PUC.LDSI.MVC
                 x => x.MigrationsAssembly("PUC.LDSI.DataBase")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            AutoMapperConfig.RegisterMappings();
 
             NativeBootStrapperBase.RegisterServices(services);
         }
