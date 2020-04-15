@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Interfaces.Services
 {
-    interface IAvaliacaoService : IAvaliacaoService
+    public interface IAvaliacaoService
     {
         //Retorna o Id da avaliação criada
         Task<int> AdicionarAvaliacaoAsync(int professorId, string disciplina, string materia, string descricao);
@@ -20,12 +20,11 @@ namespace PUC.LDSI.Domain.Interfaces.Services
         Task<int> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado);
         //Retorna o Id da opção alterada
         Task<int> AlterarOpcaoAvaliacaoAsync(int id, string descricao, bool verdadeira);
-        
+
         Task<int> ExcluirAvaliacaoAsync(int id);
         //Retorna o Id da avaliação cuja questão pertencia
         Task<int> ExcluirQuestaoAvaliacaoAsync(int id);
         //Retorna o Id da questão cuja opção pertencia
         Task<int> ExcluirOpcaoAvaliacaoAsync(int id);
     }
-}
 }

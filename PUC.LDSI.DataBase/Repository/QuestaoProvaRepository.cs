@@ -1,5 +1,4 @@
 ﻿using PUC.LDSI.Domain.Entities;
-using PUC.LDSI.Domain.Interfaces.IRepository;
 using PUC.LDSI.Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,9 @@ namespace PUC.LDSI.DataBase.Repository
 {
     public class QuestaoProvaRepository : Repository<QuestaoProva>, IQuestaoProvaRepository
     {
-        public QuestaoProvaRepository(AppDbContext context) : base(context) { }
+        private readonly AppDbContext _context;
+        public QuestaoProvaRepository(AppDbContext context) : base(context) {
+            _context = context;
+        }
     }
 }

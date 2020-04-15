@@ -8,7 +8,10 @@ namespace PUC.LDSI.DataBase.Repository
 {
     public class AvaliacaoRepository : Repository<Avaliacao>, IAvaliacaoRepository
     {
-        public AvaliacaoRepository(AppDbContext context) : base(context) { }
+        private readonly AppDbContext _context;
+        public AvaliacaoRepository(AppDbContext context) : base(context) {
+            _context = context;
+        }
     }
-    
+     
 }
