@@ -1,0 +1,32 @@
+@model QuestaoAvaliacaoViewModel
+@{
+    ViewData["Title"] = "Excluir Questão";
+    ViewData["Subtitle"] = "";
+}
+    <h1>@ViewData["Title"]</h1>
+    <h2>@ViewData["Subtitle"]</h2>
+    <h3>Confirmar a exclusão desta questão?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Enunciado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Enunciado)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
