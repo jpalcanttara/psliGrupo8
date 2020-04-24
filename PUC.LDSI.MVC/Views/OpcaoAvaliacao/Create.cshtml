@@ -1,4 +1,4 @@
-﻿@model PUC.LDSI.Domain.Entities.Turma
+@model PUC.LDSI.Domain.Entities.OpcaoAvaliacao
 
 @{
     ViewData["Title"] = "Create";
@@ -7,18 +7,27 @@
 
 <h2>Create</h2>
 
-
-
-<h4>Turma</h4>
+<h4>OpcaoAvaliacao</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label asp-for="QuestaoId" class="control-label"></label>
+                <select asp-for="QuestaoId" class ="form-control" asp-items="ViewBag.QuestaoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Verdadeira" /> @Html.DisplayNameFor(model => model.Verdadeira)
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="DataCriacao" class="control-label"></label>
