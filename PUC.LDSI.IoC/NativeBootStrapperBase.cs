@@ -13,12 +13,16 @@ namespace PUC.LDSI.IoC
         public static void RegisterServices(IServiceCollection services) {
             //Application
             services.AddScoped<ITurmaAppService, TurmaAppService>();
+            services.AddScoped<IProfessorAppService, ProfessorAppService>();
 
             //Domain - Repository
             services.AddScoped<ITurmaRepository, TurmaRepository>();
+            services.AddScoped<IAlunoRepository, AlunoRepository>();
+            services.AddScoped<IProfessorRepository, ProfessorRepository>();
 
             //Domain - Services
             services.AddScoped<ITurmaService, TurmaService>();
+            services.AddScoped<IProfessorService, ProfessorService>();
         }
     }
 }
