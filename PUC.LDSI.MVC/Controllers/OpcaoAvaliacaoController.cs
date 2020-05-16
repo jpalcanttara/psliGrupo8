@@ -1,160 +1,133 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PUC.LDSI.DataBase;
+using PUC.LDSI.Application.Interfaces;
 using PUC.LDSI.Domain.Entities;
+using PUC.LDSI.Domain.Interfaces.Repository;
+using PUC.LDSI.Identity.Entities;
+using PUC.LDSI.MVC.Models;
+using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
-    public class OpcaoAvaliacaoController : Controller
+    public class OpcaoAvaliacaoController : BaseController
     {
-        private readonly AppDbContext _context;
+        private readonly IAvaliacaoAppService _avaliacaoAppService;
+        private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
+        private readonly IOpcaoAvaliacaoRepository _opcaoAvaliacaoRepository;
 
-        public OpcaoAvaliacaoController(AppDbContext context)
+        public OpcaoAvaliacaoController(UserManager<Usuario> user,
+                                        IAvaliacaoAppService avaliacaoAppService,
+                                        IQuestaoAvaliacaoRepository questaoAvaliacaoRepository,
+                                        IOpcaoAvaliacaoRepository opcaoAvaliacaoRepository) : base(user)
         {
-            _context = context;
+            _avaliacaoAppService = avaliacaoAppService;
+            _questaoAvaliacaoRepository = questaoAvaliacaoRepository;
+            _opcaoAvaliacaoRepository = opcaoAvaliacaoRepository;
         }
 
-        // GET: OpcaoAvaliacao
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? questaoId)
         {
-            var appDbContext = _context.OpcaoAvaliacao.Include(o => o.Questao);
-            return View(await appDbContext.ToListAsync());
+            if (questaoId == null) { return NotFound(); }
+
+            var result = await _questaoAvaliacaoRepository.ObterAsync(questaoId.Value);
+
+            var questao = Mapper.Map<QuestaoAvaliacaoViewModel>(result);
+
+            return View(questao);
         }
 
-        // GET: OpcaoAvaliacao/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Create(int? questaoId)
         {
-            if (id == null)
+            if (questaoId == null) { return NotFound(); }
+
+            var result = await _questaoAvaliacaoRepository.ObterAsync(questaoId.Value);
+
+            var questao = Mapper.Map<QuestaoAvaliacaoViewModel>(result);
+
+            var opcao = new OpcaoAvaliacaoViewModel()
             {
-                return NotFound();
-            }
+                Questao = questao,
+                QuestaoId = questao.Id
+            };
 
-            var opcaoAvaliacao = await _context.OpcaoAvaliacao
-                .Include(o => o.Questao)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (opcaoAvaliacao == null)
-            {
-                return NotFound();
-            }
-
-            return View(opcaoAvaliacao);
+            return View(opcao);
         }
 
-        // GET: OpcaoAvaliacao/Create
-        public IActionResult Create()
-        {
-            ViewData["QuestaoId"] = new SelectList(_context.Questao, "Id", "Enunciado");
-            return View();
-        }
-
-        // POST: OpcaoAvaliacao/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QuestaoId,Descricao,Verdadeira,Id,DataCriacao")] OpcaoAvaliacao opcaoAvaliacao)
+        public async Task<IActionResult> Create([Bind("QuestaoId,Descricao,Verdadeira")] OpcaoAvaliacaoViewModel opcaoAvaliacao)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(opcaoAvaliacao);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var result = await _avaliacaoAppService.AdicionarOpcaoAvaliacaoAsync(opcaoAvaliacao.QuestaoId, opcaoAvaliacao.Descricao, opcaoAvaliacao.Verdadeira);
+
+                if (result.Success)
+                    return RedirectToAction(nameof(Index), new { questaoId = opcaoAvaliacao.QuestaoId });
+                else
+                    throw result.Exception;
             }
-            ViewData["QuestaoId"] = new SelectList(_context.Questao, "Id", "Enunciado", opcaoAvaliacao.QuestaoId);
+
+            ViewData["QuestaoId"] = opcaoAvaliacao.QuestaoId;
+
             return View(opcaoAvaliacao);
         }
 
-        // GET: OpcaoAvaliacao/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
-            var opcaoAvaliacao = await _context.OpcaoAvaliacao.FindAsync(id);
-            if (opcaoAvaliacao == null)
-            {
-                return NotFound();
-            }
-            ViewData["QuestaoId"] = new SelectList(_context.Questao, "Id", "Enunciado", opcaoAvaliacao.QuestaoId);
-            return View(opcaoAvaliacao);
+            var result = await _opcaoAvaliacaoRepository.ObterAsync(id.Value);
+
+            if (result == null) { return NotFound(); }
+
+            var opcao = Mapper.Map<OpcaoAvaliacaoViewModel>(result);
+
+            return View(opcao);
         }
 
-        // POST: OpcaoAvaliacao/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("QuestaoId,Descricao,Verdadeira,Id,DataCriacao")] OpcaoAvaliacao opcaoAvaliacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,QuestaoId,Descricao,Verdadeira")] OpcaoAvaliacao opcaoAvaliacao)
         {
-            if (id != opcaoAvaliacao.Id)
-            {
-                return NotFound();
-            }
+            if (id != opcaoAvaliacao.Id) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(opcaoAvaliacao);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OpcaoAvaliacaoExists(opcaoAvaliacao.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                var result = await _avaliacaoAppService.AlterarOpcaoAvaliacaoAsync(opcaoAvaliacao.Id, opcaoAvaliacao.Descricao, opcaoAvaliacao.Verdadeira);
+
+                if (result.Success)
+                    return RedirectToAction(nameof(Index), new { questaoId = opcaoAvaliacao.QuestaoId });
+                else
+                    throw result.Exception;
             }
-            ViewData["QuestaoId"] = new SelectList(_context.Questao, "Id", "Enunciado", opcaoAvaliacao.QuestaoId);
+
             return View(opcaoAvaliacao);
         }
 
-        // GET: OpcaoAvaliacao/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
-            var opcaoAvaliacao = await _context.OpcaoAvaliacao
-                .Include(o => o.Questao)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (opcaoAvaliacao == null)
-            {
-                return NotFound();
-            }
+            var result = await _opcaoAvaliacaoRepository.ObterAsync(id.Value);
 
-            return View(opcaoAvaliacao);
+            if (result == null) { return NotFound(); }
+
+            var opcao = Mapper.Map<OpcaoAvaliacaoViewModel>(result);
+
+            return View(opcao);
         }
 
-        // POST: OpcaoAvaliacao/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var opcaoAvaliacao = await _context.OpcaoAvaliacao.FindAsync(id);
-            _context.OpcaoAvaliacao.Remove(opcaoAvaliacao);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            var result = await _avaliacaoAppService.ExcluirOpcaoAvaliacaoAsync(id);
 
-        private bool OpcaoAvaliacaoExists(int id)
-        {
-            return _context.OpcaoAvaliacao.Any(e => e.Id == id);
+            if (result.Success)
+                return RedirectToAction(nameof(Index), new { questaoId = result.Data });
+            else
+                throw result.Exception;
         }
     }
 }

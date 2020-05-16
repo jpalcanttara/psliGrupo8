@@ -1,20 +1,22 @@
-@model QuestaoAvaliacaoViewModel
+Ôªø@model QuestaoAvaliacaoViewModel
+
 @{
-    ViewData["Title"] = "Excluir Quest„o";
-    ViewData["Subtitle"] = "";
+    ViewData["Title"] = "Excluir Quest√£o";
 }
-    <h1>@ViewData["Title"]</h1>
-    <h2>@ViewData["Subtitle"]</h2>
-    <h3>Confirmar a exclus„o desta quest„o?</h3>
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>@Html.DisplayFor(model => model.Avaliacao.Materia) / @Html.DisplayFor(model => model.Avaliacao.Disciplina) / @Html.DisplayFor(model => model.Avaliacao.Descricao)</h4>
+
+<h4>Confirma a exclus√£o desta quest√£o?</h4>
 <div>
-    
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Tipo)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Tipo)
+            @(Model.Tipo == 1 ? "M√∫ltipla Escolha" : "Verdadeiro ou Falso")
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Enunciado)
@@ -23,10 +25,10 @@
             @Html.DisplayFor(model => model.Enunciado)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Excluir" class="btn btn-default" />
+        <a asp-action="Index" asp-route-avaliacaoId="@Model.AvaliacaoId" class="btn btn-default">Cancelar</a>
     </form>
 </div>

@@ -1,22 +1,21 @@
-@model PUC.LDSI.Domain.Entities.OpcaoAvaliacao
+﻿@model OpcaoAvaliacaoViewModel
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Nova Opção";
 }
 
-<h2>Create</h2>
+<h2>@ViewData["Title"]</h2>
 
-<h4>OpcaoAvaliacao</h4>
+<h4>@Html.DisplayFor(model => model.Questao.Avaliacao.Materia) / @Html.DisplayFor(model => model.Questao.Avaliacao.Disciplina) / @Html.DisplayFor(model => model.Questao.Avaliacao.Descricao)</h4>
+
+<h5>@Html.DisplayFor(model => model.Questao.Enunciado)</h5>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="QuestaoId" class="control-label"></label>
-                <select asp-for="QuestaoId" class ="form-control" asp-items="ViewBag.QuestaoId"></select>
-            </div>
+            <input type="hidden" asp-for="QuestaoId" />
             <div class="form-group">
                 <label asp-for="Descricao" class="control-label"></label>
                 <input asp-for="Descricao" class="form-control" />
@@ -30,19 +29,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="DataCriacao" class="control-label"></label>
-                <input asp-for="DataCriacao" class="form-control" />
-                <span asp-validation-for="DataCriacao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Salvar" class="btn btn-default" />
+                <a asp-action="Index" asp-route-questaoId="@Model.QuestaoId" class="btn btn-default">Cancelar</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

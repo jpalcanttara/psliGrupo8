@@ -7,9 +7,9 @@ namespace PUC.LDSI.MVC.Models
     {
         [Key]
         public int Id { get; set; }
-        
-        [Required(ErrorMessage ="O nome da turma é requerido.")]
-        [MaxLength(100,ErrorMessage ="Informe no máximo {0} carecteres.")]
+
+        [Required(ErrorMessage = "O nome da turma é requerido.")]
+        [MaxLength(100, ErrorMessage = "Informe no máximo {0} caracteres.")]
         [DisplayName("Nome da Turma")]
         public string Nome { get; set; }
     }

@@ -9,7 +9,7 @@ namespace PUC.LDSI.Application
         public bool Success { get; set; }
         public DomainException Exception { get; set; }
 
-        public DataResult(DataResult<int> retorno) 
+        public DataResult() 
         {
             Success = true;
         }

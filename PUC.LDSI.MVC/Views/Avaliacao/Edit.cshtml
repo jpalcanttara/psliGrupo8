@@ -1,35 +1,40 @@
-@model AvaliacaoViewModel
+ï»¿@model AvaliacaoViewModel
+
 @{
-    ViewData["Title"] = "Edição de Avaliações";
+    ViewData["Title"] = "Alterar AvaliaÃ§Ã£o";
 }
-<h2>Editar Avaliação</h2>
+
+<h2>Alterar dados da avaliaÃ§Ã£o</h2>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="disciplina" class="control-label"></label>
-                <input asp-for="disciplina" class="form-control" />
-                <span asp-validation-for="disciplina" class="text-danger"></span>
+                <label asp-for="Disciplina" class="control-label">Disciplina</label>
+                <input asp-for="Disciplina" class="form-control" />
+                <span asp-validation-for="Disciplina" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="materia" class="control-label"></label>
-                <input asp-for="materia" class="form-control" />
-                <span asp-validation-for="materia" class="text-danger"></span>
+                <label asp-for="Materia" class="control-label">MatÃ©ria</label>
+                <input asp-for="Materia" class="form-control" />
+                <span asp-validation-for="Materia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
+                <label asp-for="Descricao" class="control-label">DescriÃ§Ã£o</label>
                 <input asp-for="Descricao" class="form-control" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-default" />
-               <input type="submit" value="Cancelar" asp-action="Index" class="btn btn-default">
+                <a asp-action="Index" class="btn btn-default">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

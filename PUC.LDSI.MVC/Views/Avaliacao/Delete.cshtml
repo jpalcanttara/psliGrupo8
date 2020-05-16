@@ -1,23 +1,26 @@
-@model AvaliacaoViewModel
+ï»¿@model AvaliacaoViewModel
+
 @{
-    ViewData["Title"] = "Exclusão de Avaliações";
+    ViewData["Title"] = "Excluir AvaliaÃ§Ã£o";
 }
-<h3>Exclusão de Avaliações</h3>
-<h3>Confirmar a exclusão dessa avaliação?</h3>
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Confirma a exclusÃ£o desta avaliaÃ§Ã£o?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.disciplina)
+            @Html.DisplayNameFor(model => model.Disciplina)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.disciplina)
+            @Html.DisplayFor(model => model.Disciplina)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.materia)
+            @Html.DisplayNameFor(model => model.Materia)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.materia)
+            @Html.DisplayFor(model => model.Materia)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Descricao)
@@ -25,11 +28,11 @@
         <dd>
             @Html.DisplayFor(model => model.Descricao)
         </dd>
-        
     </dl>
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Excluir" class="btn btn-default" />
+        <a asp-action="Index" class="btn btn-default">Cancelar</a>
     </form>
 </div>

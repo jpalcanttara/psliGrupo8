@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PUC.LDSI.Domain.Entities
 {
@@ -17,10 +15,10 @@ namespace PUC.LDSI.Domain.Entities
             var erros = new List<string>();
 
             if (OpcaoAvaliacaoId == 0)
-                erros.Add("A Opção precisa ser informada!"); //correção
+                erros.Add("A opção da avaliação precisa ser informada!");
 
             if (QuestaoProvaId == 0)
-                erros.Add("A questão precisa ser informada!"); //correção
+                erros.Add("A questão da prova precisa ser informada!");
 
             return erros.ToArray();
         }

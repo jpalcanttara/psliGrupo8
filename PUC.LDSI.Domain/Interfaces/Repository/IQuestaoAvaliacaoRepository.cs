@@ -2,5 +2,5 @@
 
 namespace PUC.LDSI.Domain.Interfaces.Repository
 {
-    public interface IOpcaoAvaliacaoRepository : IRepository<OpcaoAvaliacao> { }
+    public interface IQuestaoAvaliacaoRepository : IRepository<QuestaoAvaliacao> { }
 }

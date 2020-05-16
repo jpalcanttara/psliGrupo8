@@ -1,22 +1,25 @@
-@model AvaliacaoViewModel
+ï»¿@model AvaliacaoViewModel
+
 @{
-    ViewData["Title"] = "Cadastro de Avaliações";
+    ViewData["Title"] = "Cadastro de AvaliaÃ§Ãµes";
 }
-<h2>Incluir Nova Avaliação</h2>
+
+<h2>Incluir Nova AvaliaÃ§Ã£o</h2>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="disciplina" class="control-label"></label>
-                <input asp-for="disciplina" class="form-control" />
-                <span asp-validation-for="disciplina" class="text-danger"></span>
+                <label asp-for="Disciplina" class="control-label"></label>
+                <input asp-for="Disciplina" class="form-control" />
+                <span asp-validation-for="Disciplina" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="materia" class="control-label"></label>
-                <input asp-for="materia" class="form-control" />
-                <span asp-validation-for="materia" class="text-danger"></span>
+                <label asp-for="Materia" class="control-label"></label>
+                <input asp-for="Materia" class="form-control" />
+                <span asp-validation-for="Materia" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Descricao" class="control-label"></label>
@@ -25,11 +28,13 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-default" />
-               <input type="submit" value="Cancelar" asp-action="Index" class="btn btn-default">
+                <a asp-action="Index" class="btn btn-default">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

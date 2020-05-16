@@ -1,32 +1,31 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using PUC.LDSI.Application.Interfaces;
+using PUC.LDSI.Domain.Interfaces.Repository;
+using PUC.LDSI.Identity.Entities;
+using PUC.LDSI.MVC.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PUC.LDSI.Application.Interfaces;
-using PUC.LDSI.DataBase;
-using PUC.LDSI.Domain.Entities;
-using PUC.LDSI.Domain.Interfaces.Repository
-using PUC.LDSI.MVC.Models;
 
 namespace PUC.LDSI.MVC.Controllers
 {
-    public class TurmaController : Controller
+    public class TurmaController : BaseController
     {
         private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
 
-        public TurmaController(ITurmaAppService turmaAppService, ITurmaRepository turmaRepository)
+        public TurmaController(UserManager<Usuario> user, 
+                               ITurmaAppService turmaAppService, 
+                               ITurmaRepository turmaRepository) : base(user)
         {
             _turmaAppService = turmaAppService;
             _turmaRepository = turmaRepository;
         }
 
         // GET: Turma
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var result = _turmaRepository.ObterTodos();
 
@@ -41,12 +40,9 @@ namespace PUC.LDSI.MVC.Controllers
             return View();
         }
 
-        // POST: Turma/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome,Id,DataCriacao")] TurmaViewModel turma)
+        public async Task<IActionResult> Create([Bind("Nome,Id")] TurmaViewModel turma)
         {
             if (ModelState.IsValid)
             {
@@ -80,12 +76,9 @@ namespace PUC.LDSI.MVC.Controllers
             return View(viewModel);
         }
 
-        // POST: Turma/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nome,Id,DataCriacao")] TurmaViewModel turma)
+        public async Task<IActionResult> Edit(int id, [Bind("Nome,Id")] TurmaViewModel turma)
         {
             if (id != turma.Id)
             {
@@ -101,10 +94,10 @@ namespace PUC.LDSI.MVC.Controllers
                 else
                     throw result.Exception;
             }
+
             return View(turma);
         }
 
-        // GET: Turma/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -113,7 +106,7 @@ namespace PUC.LDSI.MVC.Controllers
             }
 
             var turma = await _turmaRepository.ObterAsync(id.Value);
-            
+
             if (turma == null)
             {
                 return NotFound();
@@ -124,7 +117,6 @@ namespace PUC.LDSI.MVC.Controllers
             return View(viewModel);
         }
 
-        // POST: Turma/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

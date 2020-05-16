@@ -2,7 +2,7 @@
 
 namespace PUC.LDSI.MVC.AutoMapper
 {
-    public class AutoMapperConfig
+    public abstract class AutoMapperConfig
     {
         public static void RegisterMappings()
         {

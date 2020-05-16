@@ -1,8 +1,11 @@
-@model IEnumerable<AvaliacaoViewModel>
+ï»¿@model IEnumerable<AvaliacaoViewModel>
+
 @{
-    ViewData["Title"] = "Avaliações";
+    ViewData["Title"] = "AvaliaÃ§Ãµes";
 }
-<h2>Avaliações</h2>
+
+<h2>AvaliaÃ§Ãµes</h2>
+
 <p>
     <a asp-action="Create" class="btn btn-default">Criar Nova</a>
 </p>
@@ -11,10 +14,10 @@
         <tr>
             <th>Professor</th>
             <th>Disciplina</th>
-            <th>Matéria</th>
-            <th>Descrição</th>
-            <th>Ações</th>
-            <th>Válida</th>
+            <th>MatÃ©ria</th>
+            <th>DescriÃ§Ã£o</th>
+            <th>AÃ§Ãµes</th>
+            <th>VÃ¡lida</th>
         </tr>
     </thead>
     <tbody>
@@ -22,17 +25,19 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Professor)</td>
-                <td>@Html.DisplayFor(modelItem => item.disciplina)</td>
-                <td>@Html.DisplayFor(modelItem => item.materia)</td>
+                <td>@Html.DisplayFor(modelItem => item.Disciplina)</td>
+                <td>@Html.DisplayFor(modelItem => item.Materia)</td>
                 <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit" title="Editar Avaliação"></i></a>&nbsp;
-                    <a asp-action="Index" asp-controller="QuestaoAvaliacao" asp-route-avaliacaoId="@item.Id"><i class="fas fa-tools" title="Construir Avaliação"></i></a>&nbsp;
-                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt" title="Excluir Avaliação"></i></a>&nbsp;
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit" title="Editar AvaliaÃ§Ã£o"></i></a>&nbsp;
+                    <a asp-action="Index" asp-controller="QuestaoAvaliacao" asp-route-avaliacaoId="@item.Id"><i class="fas fa-tools" title="Construir AvaliaÃ§Ã£o"></i></a>&nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt" title="Excluir AvaliaÃ§Ã£o"></i></a>&nbsp;
                 </td>
                 <td style="@(item.EhValida ? "color:green" : "color:red")">
-                    <i class="@(item.EhValida ? "fas fa-check" : "fas fa-times")"
-                       title="@(item.EhValida ? "Avaliação OK" : "Esta avaliação possui pendências a resolver!")"></i>
+                    <i 
+                       class="@(item.EhValida ? "fas fa-check" : "fas fa-times")" 
+                       title="@(item.EhValida ? "AvaliaÃ§Ã£o OK" : "Esta avaliaÃ§Ã£o possui pendÃªncias a resolver!")"
+                    ></i>
                 </td>
             </tr>
         }

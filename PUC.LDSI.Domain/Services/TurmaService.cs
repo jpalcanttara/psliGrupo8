@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using PUC.LDSI.Domain.Interfaces.Services;
-using PUC.LDSI.Domain.Interfaces.Repository;
-using System.Threading.Tasks;
-using PUC.LDSI.Domain.Entities;
+﻿using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Exception;
+using PUC.LDSI.Domain.Interfaces.Repository;
+using PUC.LDSI.Domain.Interfaces.Services;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Services
 {
@@ -15,9 +13,10 @@ namespace PUC.LDSI.Domain.Services
         private readonly ITurmaRepository _turmaRepository;
         private readonly IAlunoRepository _alunoRepository;
 
-        public TurmaService(ITurmaRepository turmaRepository)
+        public TurmaService(ITurmaRepository turmaRepository, IAlunoRepository alunoRepository)
         {
             _turmaRepository = turmaRepository;
+            _alunoRepository = alunoRepository;
         }
 
         public async Task<int> AdicionarTurmaAsync(string descricao)
@@ -26,7 +25,7 @@ namespace PUC.LDSI.Domain.Services
 
             var erros = turma.Validate();
 
-            if(erros.Length == 0)
+            if (erros.Length == 0)
             {
                 await _turmaRepository.AdicionarAsync(turma);
 
@@ -45,7 +44,7 @@ namespace PUC.LDSI.Domain.Services
 
             var erros = turma.Validate();
 
-            if(erros.Length == 0)
+            if (erros.Length == 0)
             {
                 _turmaRepository.Modificar(turma);
 
@@ -58,9 +57,9 @@ namespace PUC.LDSI.Domain.Services
         {
             var turma = await _turmaRepository.ObterAsync(id);
 
-            if(turma.Alunos?.Count > 0)
+            if (turma.Alunos?.Count > 0)
                 throw new DomainException("Não é possível excluir uma turma que possui alunos matriculados!");
-            
+
             _turmaRepository.Excluir(id);
 
             _turmaRepository.SaveChanges();
@@ -83,12 +82,15 @@ namespace PUC.LDSI.Domain.Services
         public async Task<int> IncluirAlunoAsync(int turmaId, string nomeAluno)
         {
             var aluno = new Aluno() { Nome = nomeAluno, TurmaId = turmaId };
+
             var erros = aluno.Validate();
 
             if (erros.Length == 0)
             {
                 await _alunoRepository.AdicionarAsync(aluno);
+
                 _alunoRepository.SaveChanges();
+
                 return aluno.Id;
             }
             else throw new DomainException(erros);

@@ -1,96 +1,79 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PUC.LDSI.Application.Interfaces;
-using PUC.LDSI.Domain.Entities;
+using PUC.LDSI.Domain.Interfaces.Repository;
 using PUC.LDSI.Identity.Entities;
 using PUC.LDSI.MVC.Models;
-using PUC.LDSI.Domain.Interfaces.Repository;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
     public class AvaliacaoController : BaseController
     {
-
         private readonly IAvaliacaoAppService _avaliacaoAppService;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
 
         public AvaliacaoController(UserManager<Usuario> user,
-                                     IAvaliacaoAppService avaliacaoAppService,
-                                     IAvaliacaoRepository avaliacaoRepository) : base(user)
+                                   IAvaliacaoAppService avaliacaoAppService,
+                                   IAvaliacaoRepository avaliacaoRepository) : base(user)
         {
             _avaliacaoAppService = avaliacaoAppService;
+
             _avaliacaoRepository = avaliacaoRepository;
         }
-        // GET: Avaliacao
+
         public async Task<IActionResult> Index()
         {
-            var result = _avaliacaoRepository.ObterTodos();
+            var result = await _avaliacaoRepository.ListarAvaliacoesDoProfessorAsync(IntegrationUserId);
+
             var avaliacoes = Mapper.Map<List<AvaliacaoViewModel>>(result.ToList());
+
             return View(avaliacoes);
         }
 
-
-
-
-        // GET: Avaliacao/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Avaliação/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfessorId, Disciplina, Materia, Descricao, Id, DataCriacao")] AvaliacaoViewModel avaliacao)
+        public async Task<IActionResult> Create([Bind("Disciplina,Materia,Descricao")] AvaliacaoViewModel avaliacao)
         {
             if (ModelState.IsValid)
             {
-                var result = await _avaliacaoAppService.AdicionarAvaliacaoAsync(UsuarioLogado.IntegrationId, avaliacao.disciplina, avaliacao.materia, avaliacao.Descricao);
+                var result = await _avaliacaoAppService.AdicionarAvaliacaoAsync(IntegrationUserId, avaliacao.Disciplina, avaliacao.Materia, avaliacao.Descricao);
 
                 if (result.Success)
                     return RedirectToAction(nameof(Index));
                 else
                     throw result.Exception;
             }
+
             return View(avaliacao);
         }
 
-        // GET: Avaliacao/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
-            var avaliacao = await _avaliacaoRepository.ObterAsync(id.Value);
+            var result = await _avaliacaoRepository.ObterAsync(id.Value);
 
-            if (avaliacao == null)
-            {
-                return NotFound();
-            }
+            if (result == null) { return NotFound(); }
 
-            var viewModel = Mapper.Map<AvaliacaoViewModel>(avaliacao);
+            var avaliacao = Mapper.Map<AvaliacaoViewModel>(result);
 
-            return View(viewModel);
+            return View(avaliacao);
         }
 
-        // POST: Avaliacao/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> Edit(int id, [Bind("ProfessorId,Disciplina,Materia,Descricao,Id,DataCriacao")] Avaliacao avaliacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Disciplina,Materia,Descricao")] AvaliacaoViewModel avaliacao)
         {
-            if (id != avaliacao.Id)
-            {
-                return NotFound();
-            }
+            if (id != avaliacao.Id) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
@@ -101,35 +84,28 @@ namespace PUC.LDSI.MVC.Controllers
                 else
                     throw result.Exception;
             }
+
             return View(avaliacao);
         }
 
-        // GET: Avaliacao/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
-            var avaliacao = await _avaliacaoRepository.ObterAsync(id.Value);
+            var result = await _avaliacaoRepository.ObterAsync(id.Value);
 
-            if (avaliacao == null)
-            {
-                return NotFound();
-            }
+            if (result == null) { return NotFound(); }
 
-            var viewModel = Mapper.Map<AvaliacaoViewModel>(avaliacao);
+            var avaliacao = Mapper.Map<AvaliacaoViewModel>(result);
 
-            return View(viewModel);
+            return View(avaliacao);
         }
 
-        // POST: Avaliacao/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var result = await _avaliacaoAppService.ExcluirAsync(id);
+            var result = await _avaliacaoAppService.ExcluirAvaliacaoAsync(id);
 
             if (result.Success)
                 return RedirectToAction(nameof(Index));

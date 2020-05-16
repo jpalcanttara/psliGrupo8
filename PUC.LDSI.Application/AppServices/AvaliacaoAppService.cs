@@ -1,8 +1,6 @@
 ﻿using PUC.LDSI.Application.Interfaces;
 using PUC.LDSI.Domain.Interfaces.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PUC.LDSI.Application.AppServices
@@ -10,7 +8,6 @@ namespace PUC.LDSI.Application.AppServices
     public class AvaliacaoAppService : IAvaliacaoAppService
     {
         private readonly IAvaliacaoService _avaliacaoService;
-
 
         public AvaliacaoAppService(IAvaliacaoService avaliacaoService)
         {
@@ -27,25 +24,15 @@ namespace PUC.LDSI.Application.AppServices
             }
             catch (Exception ex)
             {
-                return new DataResult<int>(ex); 
+                return new DataResult<int>(ex);
             }
         }
 
-        public Task<DataResult<int>> AdicionarOpcaoAvaliacaoAsync(int questaoId, string descricao, bool verdadeira)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DataResult<int>> AdicionarQuestaoAvaliacaoAsync(int avaliacaoId, int tipo, string enunciado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<DataResult<int>> AlterarAvaliacaoAsync(int id, string disciplina, string materia, string descricao)
+        public async Task<DataResult<int>> AdicionarOpcaoAvaliacaoAsync(int questaoId, string descricao, bool verdadeira)
         {
             try
             {
-                var retorno = await _avaliacaoService.AdicionarAvaliacaoAsync(id, disciplina, materia, descricao);
+                var retorno = await _avaliacaoService.AdicionarOpcaoAvaliacaoAsync(questaoId, descricao, verdadeira);
 
                 return new DataResult<int>(retorno);
             }
@@ -55,14 +42,60 @@ namespace PUC.LDSI.Application.AppServices
             }
         }
 
-        public Task<DataResult<int>> AlterarOpcaoAvaliacaoAsync(int id, string descricao, bool verdadeira)
+        public async Task<DataResult<int>> AdicionarQuestaoAvaliacaoAsync(int avaliacaoId, int tipo, string enunciado)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var retorno = await _avaliacaoService.AdicionarQuestaoAvaliacaoAsync(avaliacaoId, tipo, enunciado);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
         }
 
-        public Task<DataResult<int>> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado)
+        public async Task<DataResult<int>> AlterarAvaliacaoAsync(int id, string disciplina, string materia, string descricao)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var retorno = await _avaliacaoService.AlterarAvaliacaoAsync(id, disciplina, materia, descricao);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
+        }
+
+        public async Task<DataResult<int>> AlterarOpcaoAvaliacaoAsync(int id, string descricao, bool verdadeira)
+        {
+            try
+            {
+                var retorno = await _avaliacaoService.AlterarOpcaoAvaliacaoAsync(id, descricao, verdadeira);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
+        }
+
+        public async Task<DataResult<int>> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado)
+        {
+            try
+            {
+                var retorno = await _avaliacaoService.AlterarQuestaoAvaliacaoAsync(id, tipo, enunciado);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
         }
 
         public async Task<DataResult<int>> ExcluirAvaliacaoAsync(int id)
@@ -79,14 +112,32 @@ namespace PUC.LDSI.Application.AppServices
             }
         }
 
-        public Task<DataResult<int>> ExcluirOpcaoAvaliacaoAsync(int id)
+        public async Task<DataResult<int>> ExcluirOpcaoAvaliacaoAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var retorno = await _avaliacaoService.ExcluirOpcaoAvaliacaoAsync(id);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
         }
 
-        public Task<DataResult<int>> ExcluirQuestaoAvaliacaoAsync(int id)
+        public async Task<DataResult<int>> ExcluirQuestaoAvaliacaoAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var retorno = await _avaliacaoService.ExcluirQuestaoAvaliacaoAsync(id);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
         }
     }
 }

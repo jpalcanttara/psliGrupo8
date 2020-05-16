@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PUC.LDSI.Domain.Entities
 {
@@ -14,7 +12,7 @@ namespace PUC.LDSI.Domain.Entities
             var erros = new List<string>();
 
             if (string.IsNullOrEmpty(Nome))
-                erros.Add("O nome professor precisa ser informada!");
+                erros.Add("O nome precisa ser informado!");
 
             return erros.ToArray();
         }

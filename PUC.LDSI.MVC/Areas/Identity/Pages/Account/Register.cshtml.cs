@@ -26,7 +26,7 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
         private readonly UserManager<Usuario> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        
         private readonly IProfessorAppService _professorAppService;
         private readonly ITurmaRepository _turmaRepository;
         private readonly ITurmaAppService _turmaAppService;
@@ -35,17 +35,18 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             UserManager<Usuario> userManager,
             SignInManager<Usuario> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IProfessorAppService professorAppService,
+            ITurmaRepository turmaRepository,
+            ITurmaAppService turmaAppService)
         {
+            _professorAppService = professorAppService;
+            _turmaRepository = turmaRepository;
+            _turmaAppService = turmaAppService;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-        }
-        public SelectList Turmas()
-        {
-            var turmas = _turmaRepository.ObterTodos().ToList();
-            return new SelectList(turmas, "Id", "Nome");
         }
 
         [BindProperty]
@@ -84,6 +85,13 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             public int TurmaId { get; set; }
         }
 
+        public SelectList Turmas()
+        {
+            var turmas = _turmaRepository.ObterTodos().ToList();
+
+            return new SelectList(turmas, "Id", "Nome");
+        }
+
         public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -104,6 +112,7 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
                 if (result.Success)
                 {
                     var user = new Usuario { UserName = Input.Email, Email = Input.Email, IntegrationId = result.Data, UserType = Input.Tipo };
+
                     var identityResult = await _userManager.CreateAsync(user, Input.Password);
 
                     if (identityResult.Succeeded)
@@ -114,7 +123,9 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
                             await _signInManager.UserManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Aluno"));
 
                         _logger.LogInformation("User created a new account with password.");
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
+
                         return LocalRedirect(returnUrl);
                     }
                     foreach (var error in identityResult.Errors)

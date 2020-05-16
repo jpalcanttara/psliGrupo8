@@ -9,8 +9,13 @@ namespace PUC.LDSI.MVC.AutoMapper
         public DomainToViewModelMappingProfile()
         {
             CreateMap<Turma, TurmaViewModel>().ReverseMap();
-            CreateMap<Avaliacao, AvaliacaoViewModel>().ForMember(destino => destino.Professor, opt => opt.MapFrom(avaliacao => avaliacao.Professor.Nome)).ReverseMap();
-            CreateMap<Questao, QuestaoAvaliacaoViewModel>().ReverseMap();
+
+            CreateMap<Avaliacao, AvaliacaoViewModel>()
+                .ForMember(destino => destino.Professor, opt => opt.MapFrom(avaliacao => avaliacao.Professor.Nome))
+                .ReverseMap();
+
+            CreateMap<QuestaoAvaliacao, QuestaoAvaliacaoViewModel>().ReverseMap();
+
             CreateMap<OpcaoAvaliacao, OpcaoAvaliacaoViewModel>().ReverseMap();
         }
     }

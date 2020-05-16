@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
@@ -24,19 +23,17 @@ namespace PUC.LDSI.Domain.Entities
             if (TurmaId == 0)
                 erros.Add("A turma precisa ser informada!");
 
-            if (ValorProva == 0)
-                erros.Add("O valor da prova precisa ser informada!");
-
-
             if (DataInicio == DateTime.MinValue)
-                erros.Add("A data inicio precisa ser informada!");
+                erros.Add("A data de início precisa ser informada!");
 
             if (DataFim == DateTime.MinValue)
-                erros.Add("A data fim precisa ser informada!");
+                erros.Add("A data de término precisa ser informada!");
 
+            if (DataFim < DataInicio)
+                erros.Add("A data de fim não pode ser anterior à data de início!");
 
-            if (DataInicio > DataFim)
-                erros.Add("A data fim invalida!");
+            if (ValorProva <= 0)
+                erros.Add("A prova precisa ter um valor!");
 
             return erros.ToArray();
         }

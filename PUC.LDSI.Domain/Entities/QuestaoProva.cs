@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PUC.LDSI.Domain.Entities
 {
     public class QuestaoProva : Entity
     {
-        public int QuestionId { get; set; }
         public int ProvaId { get; set; }
+        public int QuestaoId { get; set; }
         public decimal Nota { get; set; }
-        public Questao Questao { get; set; }
         public Prova Prova { get; set; }
+        public QuestaoAvaliacao QuestaoAvaliacao { get; set; }
         public List<OpcaoProva> OpcoesProva { get; set; }
 
         public override string[] Validate()
@@ -20,8 +18,8 @@ namespace PUC.LDSI.Domain.Entities
             if (ProvaId == 0)
                 erros.Add("A prova precisa ser informada!");
 
-            if (QuestionId == 0)
-                erros.Add("A questao precisa ser informada!");
+            if (QuestaoId == 0)
+                erros.Add("A questão precisa ser informada!");
 
             return erros.ToArray();
         }

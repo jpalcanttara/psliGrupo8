@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Interfaces.Repository;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PUC.LDSI.DataBase.Repository
 {
